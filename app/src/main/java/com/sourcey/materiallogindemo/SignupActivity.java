@@ -41,6 +41,11 @@ public class SignupActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        if(firebaseAuth.getCurrentUser() != null){
+            finish();
+            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+        }
+
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,18 +93,20 @@ public class SignupActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                       // if(task.isSuccessful()){
-                            //onSignupSuccess();
-                           // progressDialog.dismiss();
-                       // }else {
-                          //  onSignupFailed();
-                          //  progressDialog.dismiss();
-                        //}
+                        if(task.isSuccessful()){
+                            progressDialog.dismiss();
+                            onSignupSuccess();
+                            finish();
+                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                        }else {
+                            progressDialog.dismiss();
+                            onSignupFailed();
+                        }
                     }
                 });
 
 
-        new android.os.Handler().postDelayed(
+       /* new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
                         // On complete call either onSignupSuccess or onSignupFailed
@@ -108,7 +115,7 @@ public class SignupActivity extends AppCompatActivity {
                         // onSignupFailed();
                         progressDialog.dismiss();
                     }
-                }, 3000);
+                }, 3000);*/
     }
 
 

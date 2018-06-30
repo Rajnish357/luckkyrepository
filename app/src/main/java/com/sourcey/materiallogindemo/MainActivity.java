@@ -8,12 +8,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
 public class MainActivity extends AppCompatActivity {
+    private FirebaseAuth firebaseAuth;
     @BindView(R.id.fab) FloatingActionButton fab;
 
     @Override
@@ -22,6 +25,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        if(firebaseAuth.getCurrentUser() == null){
+            finish();
+            startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+        }
 
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
