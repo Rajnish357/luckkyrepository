@@ -25,7 +25,8 @@
             android:name=".SignupActivity"
             android:theme="@style/AppTheme.Dark" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".AdsActivity"></activity>
+        <activity android:name=".AdsActivity" />
+        <activity android:name=".ProfileActivity"></activity>
     </application>
 
 </manifest>

@@ -18,7 +18,7 @@ public class splashScreen extends AppCompatActivity {
                 .withTargetActivity(MainActivity.class)
                 .withSplashTimeOut(5000)
                 .withBackgroundColor(Color.parseColor("#E43F3F"))
-                .withLogo(R.drawable.logo)
+                .withLogo(R.drawable.logo_large)
                 //.withHeaderText("Welcome Guest !!!")
                 .withFooterText("Copyright 2018")
                 .withBeforeLogoText("You Can Make Real Money with");

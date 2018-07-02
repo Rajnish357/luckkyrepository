@@ -16,6 +16,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +26,7 @@ import butterknife.ButterKnife;
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference databaseReference;
 
     @BindView(R.id.input_name) EditText _nameText;
     @BindView(R.id.input_mobile) EditText _mobileText;
@@ -40,6 +44,7 @@ public class SignupActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         if(firebaseAuth.getCurrentUser() != null){
             finish();
@@ -81,10 +86,10 @@ public class SignupActivity extends AppCompatActivity {
         progressDialog.setMessage("Creating Account...");
         progressDialog.show();
 
-        String name = _nameText.getText().toString();
-        String mobile = _mobileText.getText().toString();
-        String email = _emailText.getText().toString();
-        String upi = _Text.getText().toString();
+        final String name = _nameText.getText().toString();
+        final String mobile = _mobileText.getText().toString();
+        final String email = _emailText.getText().toString();
+        final String upi = _Text.getText().toString();
         String password = _passwordText.getText().toString();
         String reEnterPassword = _reEnterPasswordText.getText().toString();
 
@@ -94,7 +99,13 @@ public class SignupActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
+
+                            UserRegistInfor userRegistInfor = new UserRegistInfor(name,mobile,email,upi);
+                            FirebaseUser user = firebaseAuth.getCurrentUser();
+                            databaseReference.child(user.getUid()).setValue(userRegistInfor);
+
                             progressDialog.dismiss();
+
                             onSignupSuccess();
                             finish();
                             startActivity(new Intent(getApplicationContext(),MainActivity.class));
@@ -104,7 +115,6 @@ public class SignupActivity extends AppCompatActivity {
                         }
                     }
                 });
-
 
        /* new android.os.Handler().postDelayed(
                 new Runnable() {
@@ -117,7 +127,6 @@ public class SignupActivity extends AppCompatActivity {
                     }
                 }, 3000);*/
     }
-
 
     public void onSignupSuccess() {
         Toast.makeText(getBaseContext(),"Registered Successfully", Toast.LENGTH_SHORT).show();

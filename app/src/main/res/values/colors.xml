@@ -14,4 +14,12 @@
   <color name="base">#AAAAAA</color>
   <color name="iron">#CCCCCC</color>
   <color name="white">#FFFFFF</color>
+
+  <color name="primaryColor">#e43f3f</color>
+  <color name="primaryLightColor">#ff746a</color>
+  <color name="primaryDarkColor">#ab0018</color>
+  <color name="secondaryColor">#ff5252</color>
+  <color name="secondaryLightColor">#ff867f</color>
+  <color name="secondaryDarkColor">#c50e29</color>
+  <color name="secondaryTextColor">#000000</color>
 </resources>
